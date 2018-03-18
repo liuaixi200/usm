@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwx.usm.mapper.SysMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.lwx.usm.model.SysMenu" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="MENU_ID" property="menuId" jdbcType="VARCHAR" />
+    <result column="MENU_CODE" property="menuCode" jdbcType="VARCHAR" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="MENU_LINK" property="menuLink" jdbcType="VARCHAR" />
+    <result column="MENU_ICON" property="menuIcon" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="IS_PARENT" property="isParent" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    MENU_ID, MENU_CODE, MENU_NAME, MENU_LINK, MENU_ICON, PARENT_ID, IS_PARENT, status
+  </sql>
+</mapper>

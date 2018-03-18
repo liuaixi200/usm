@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	default-lazy-init="true"
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	
+	<!-- 扫描com这个包里的所有类，把里面配上相应注解的类全都放在容器中进行管理 -->  
+    <context:component-scan base-package="com.vanke.fce.web.controller,com.vanke.fce.cache"/> 
+    <mvc:annotation-driven>  
+    </mvc:annotation-driven>  
+	<import resource="spring-dao-test.xml"/>
+	<!-- 属性文件 -->
+	<bean id="fceConfigs" class="org.springframework.beans.factory.config.PropertiesFactoryBean">  
+	     <property name="locations">  
+	         <list>  
+	              <value>classpath:conf/mea-info.properties</value>
+	          </list>  
+	     </property>  
+    </bean>
+    
+    <bean id="fceProperties" class="com.lwx.usm.service.FceProperties">
+    	<property name="props" ref="fceConfigs"></property>
+    </bean>
+</beans>

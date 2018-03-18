@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwx.usm.mapper.SysButtonMapper" >
+  <resultMap id="BaseResultMap" type="com.lwx.usm.model.SysButton" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="button_id" property="buttonId" jdbcType="VARCHAR" />
+    <result column="button_code" property="buttonCode" jdbcType="VARCHAR" />
+    <result column="button_name" property="buttonName" jdbcType="VARCHAR" />
+    <result column="button_icon" property="buttonIcon" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    button_id, button_code, button_name, button_icon, status, parent_id
+  </sql>
+</mapper>

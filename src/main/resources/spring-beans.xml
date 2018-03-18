@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	 xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+	
+	<!-- 扫描com这个包里的所有类，把里面配上相应注解的类全都放在容器中进行管理 -->  
+    <context:component-scan base-package="com.lwx.usm.service,
+com.lwx.usm.utils"/>
+	 <!-- <task:annotation-driven/>  -->
+	 <task:executor id="executor" pool-size="5" />  
+    <task:scheduler id="scheduler" pool-size="10" />  
+    <task:annotation-driven executor="executor" scheduler="scheduler" /> 
+
+	<!-- 引入jdbc配置文件 -->    
+    <context:property-placeholder location="classpath*:conf/*.properties" ignore-resource-not-found="true" />
+    <!--创建jdbc数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<!-- 数据库基本信息配置 -->  
+       <property name = "url" value = "${jdbc.url}" />    
+       <property name = "username" value = "${jdbc.username}" />    
+       <property name = "password" value = "${jdbc.password}" />    
+       <property name = "driverClassName" value = "${jdbc.driver}" />    
+       <property name = "filters" value = "stat" />    
+       <!-- 最大并发连接数 -->  
+       <property name = "maxActive" value = "80" />  
+       <!-- 初始化连接数量 -->  
+       <property name = "initialSize" value = "5" />  
+       <!-- 配置获取连接等待超时的时间 -->  
+       <property name = "maxWait" value = "6000" />  
+       <!-- 最小空闲连接数 -->  
+       <property name = "minIdle" value = "10" />    
+       <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+       <property name = "timeBetweenEvictionRunsMillis" value ="60000" />  
+       <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+       <property name = "minEvictableIdleTimeMillis" value ="300000" />    
+       <property name = "validationQuery" value = "select 1" />    
+       <property name = "testWhileIdle" value = "true" />    
+       <property name = "testOnBorrow" value = "false" />    
+       <property name = "testOnReturn" value = "false" />    
+       <property name = "maxOpenPreparedStatements" value ="20" />  
+       <!-- 打开 removeAbandoned 功能 主要用于检查连接泄漏-->  
+       <property name = "removeAbandoned" value = "false" />  
+       <!-- 1800 秒，也就是 30 分钟 -->  
+       <property name = "removeAbandonedTimeout" value ="1800" />  
+       <!-- 关闭 abanded 连接时输出错误日志 -->     
+       <property name = "logAbandoned" value = "true" /> 
+	</bean>
+	
+	 <!--创建jdbc数据源 -->
+	<bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<!-- 数据库基本信息配置 -->  
+       <property name = "url" value = "${ebs.jdbc.url}" />    
+       <property name = "username" value = "${ebs.jdbc.username}" />    
+       <property name = "password" value = "${ebs.jdbc.password}" />    
+       <property name = "driverClassName" value = "${ebs.jdbc.driver}" />    
+       <property name = "filters" value = "stat" />    
+       <!-- 最大并发连接数 -->  
+       <property name = "maxActive" value = "80" />  
+       <!-- 初始化连接数量 -->  
+       <property name = "initialSize" value = "5" />  
+       <!-- 配置获取连接等待超时的时间 -->  
+       <property name = "maxWait" value = "6000" />  
+       <!-- 最小空闲连接数 -->  
+       <property name = "minIdle" value = "10" />    
+       <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+       <property name = "timeBetweenEvictionRunsMillis" value ="60000" />  
+       <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+       <property name = "minEvictableIdleTimeMillis" value ="300000" />    
+       <property name = "validationQuery" value = "select 1" />    
+       <property name = "testWhileIdle" value = "true" />    
+       <property name = "testOnBorrow" value = "false" />    
+       <property name = "testOnReturn" value = "false" />    
+       <property name = "maxOpenPreparedStatements" value ="20" />  
+       <!-- 打开 removeAbandoned 功能 主要用于检查连接泄漏-->  
+       <property name = "removeAbandoned" value = "false" />  
+       <!-- 1800 秒，也就是 30 分钟 -->  
+       <property name = "removeAbandonedTimeout" value ="1800" />  
+       <!-- 关闭 abanded 连接时输出错误日志 -->     
+       <property name = "logAbandoned" value = "true" /> 
+	</bean>
+	
+	<bean id="dynamicDataSource" class="com.lwx.usm.interceptor.DynamicDataSource">
+        <property name="targetDataSources">  
+            <map key-type="java.lang.String">  
+                <entry value-ref="dataSource" key="mea"></entry>  
+                <entry value-ref="dataSource2" key="ebs"></entry>  
+            </map>  
+        </property>  
+        <property name="defaultTargetDataSource" ref="dataSource">  
+        </property>  
+    </bean>  
+	
+	 <!-- myBatis文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml"/>
+		<property name="dataSource" ref="dynamicDataSource" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="mapperLocations" value="classpath:com/lwx/usm/mapping/mysql/*.xml" />
+	</bean>
+	
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lwx.usm.mapper" />
+		<property name="properties">
+			<value>
+				mappers=tk.mybatis.mapper.common.Mapper,tk.mybatis.mapper.common.special.InsertListMapper
+			</value>
+		</property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+    
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
+	
+	<!--启动spring注解功能-->    
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 放在事物前面 -->
+	<bean id="dataSourceInterceptor" class="com.lwx.usm.interceptor.DataSourceIntercept"></bean>
+	<aop:config>  
+        <aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor">  
+            <aop:pointcut id="daoOne" expression="execution(* com.vanke.fce.service.impl.*.*(..))" />  
+            <aop:before pointcut-ref="daoOne" method="selectDataSource" />  
+        </aop:aspect>  
+    </aop:config>  
+	<!-- 以AspectJ方式 定义 AOP 用于事务拦截 -->
+	<aop:config proxy-target-class="true" expose-proxy="true">
+		<aop:advisor pointcut="execution(* com.vanke.fce.service..*Service*.*(..))" advice-ref="transactionAdvice" />
+	</aop:config>
+	
+	 
+	<!-- (事务定义)定义事务隔离级别和事务传播属性 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+        	<tx:method name="select*" propagation="SUPPORTS" read-only="true"  />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="search*" propagation="SUPPORTS" read-only="true" />
+			<!-- <tx:method name="query*" propagation="SUPPORTS" read-only="true" /> -->
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="modify*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception,RuntimeException" />
+            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="Exception,RuntimeException"/>
+			<tx:method name="check*" propagation="REQUIRED" rollback-for="Exception,RuntimeException"/>
+			<!-- <tx:method name="get*" propagation="SUPPORTS" /> -->
+
+        </tx:attributes>    
+	</tx:advice>
+	
+	<bean id="dateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="yyyy-MM-dd" />
+	</bean>
+	
+	<!-- 属性文件 -->
+	<bean id="fceConfigs" class="org.springframework.beans.factory.config.PropertiesFactoryBean">  
+	     <property name="locations">  
+	         <list>  
+	              <value>classpath*:conf/*.properties</value>
+
+	          </list>  
+	     </property>
+	     <property name="ignoreResourceNotFound" value="true"></property>
+    </bean>
+    
+    <bean id="fceProperties" class="com.lwx.usm.service.FceProperties">
+    	<property name="props" ref="fceConfigs"></property>
+    </bean>
+</beans>

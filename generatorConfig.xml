@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!--<classPathEntry location="D:/soft/mysql-connector-java-5.1.9.jar" />  -->
+  <context id="context1">
+    <property name="javaFileEncoding" value="utf-8"></property>
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <property name="mergeable" value="false"></property>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper,tk.mybatis.mapper.common.special.InsertListMapper"></property>
+    </plugin>
+
+    <commentGenerator>
+      <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+
+
+    <jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/usm" driverClass="com.mysql.jdbc.Driver"
+                    password="root" userId="root" />
+    <javaModelGenerator  targetPackage="com.lwx.usm.model" targetProject="src/main/java" >
+      <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.lwx.usm.mapping.mysql" targetProject="src/main/resources" />
+    <javaClientGenerator targetPackage="com.lwx.usm.mapper" targetProject="src/main/java" type="XMLMAPPER" />
+
+    <table tableName="login_log" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="login_session" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_button" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_dictionary" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_menu" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_role" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_role_menu" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+    <table tableName="sys_user" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+<table tableName="sys_user_data_auth" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+ <table tableName="sys_user_pass" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
+  <table tableName="sys_user_role" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			 enableSelectByExample="false" selectByExampleQueryId="false">
+	  </table>
+	  <table tableName="tb_sequence" schema="" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			 enableSelectByExample="false" selectByExampleQueryId="false">
+	  </table>
+  </context>
+</generatorConfiguration>

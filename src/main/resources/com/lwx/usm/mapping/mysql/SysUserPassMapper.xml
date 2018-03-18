@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwx.usm.mapper.SysUserPassMapper" >
+  <resultMap id="BaseResultMap" type="com.lwx.usm.model.SysUserPass" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="update_pass_flag" property="updatePassFlag" jdbcType="CHAR" />
+    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
+    <result column="lock_flag" property="lockFlag" jdbcType="CHAR" />
+    <result column="lock_time" property="lockTime" jdbcType="TIMESTAMP" />
+    <result column="errors" property="errors" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    login_name, password, update_pass_flag, login_count, lock_flag, lock_time, errors
+  </sql>
+</mapper>

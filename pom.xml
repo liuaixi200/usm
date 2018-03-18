@@ -1,0 +1,326 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.lwx</groupId>
+  <artifactId>usm</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>usm</name>
+  <properties>
+   		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java-version>1.8</java-version>
+		<spring.version>4.3.4.RELEASE</spring.version>
+		<org.aspectj-version>1.7.3</org.aspectj-version>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<timestamp>${maven.build.timestamp}</timestamp>
+  </properties>
+  
+	<repositories>
+		<repository>
+			<!-- Maven 自带的中央仓库使用的Id为central 如果其他的仓库声明也是用该Id 就会覆盖中央仓库的配置 -->
+			<id>alicenter</id>
+			<name>alicenter</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+  <dependencies>  
+  		<!-- junit -->  
+        <dependency>  
+            <groupId>junit</groupId>  
+            <artifactId>junit</artifactId>  
+            <version>4.12-beta-3</version>  
+            <scope>test</scope>  
+        </dependency>
+	  <!--logback-->
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-classic</artifactId>
+		  <version>1.2.3</version>
+	  </dependency>
+        
+         <!-- spring 的基本依赖 开始 -->
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-webmvc</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jdbc</artifactId>
+		  <version>${spring.version}</version>
+	  </dependency>
+
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-test</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.alibaba</groupId>
+		  <artifactId>fastjson</artifactId>
+		  <version>1.2.9</version>
+		</dependency>
+       <dependency>
+		  <groupId>org.aspectj</groupId>
+		  <artifactId>aspectjweaver</artifactId>
+		  <version>1.8.3</version>
+		</dependency>
+        <!-- spring 的基本依赖 结束 -->  
+
+         <!-- Servlet -->
+         <dependency>
+             <groupId>javax.servlet</groupId>
+             <artifactId>servlet-api</artifactId>
+             <version>2.5</version>
+             <scope>provided</scope>
+        </dependency>
+        <!-- mybatis 包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+
+	  <!-- maven  tkmapper引入-->
+	  <dependency>
+		  <groupId>tk.mybatis</groupId>
+		  <artifactId>mapper</artifactId>
+		  <version>4.0.0-beta3</version>
+
+	  </dependency>
+
+		<!--mybatis spring 插件 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.34</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>com.alibaba</groupId>
+		  <artifactId>druid</artifactId>
+		  <version>1.0.23</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.3</version>
+		</dependency>
+	<dependency>
+		<groupId>commons-digester</groupId>
+		<artifactId>commons-digester</artifactId>
+		<version>1.8.1</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.2.2</version>
+	</dependency>
+	<dependency>
+	  <groupId>commons-io</groupId>
+	  <artifactId>commons-io</artifactId>
+	  <version>2.1</version>
+	</dependency>
+	<dependency>
+	  <groupId>com.carrotsearch</groupId>
+	  <artifactId>java-sizeof</artifactId>
+	  <version>0.0.5</version>
+	</dependency>
+	<dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+	<dependency>
+	  <groupId>javax.servlet.jsp.jstl</groupId>
+	  <artifactId>jstl-api</artifactId>
+	  <version>1.2</version>
+	</dependency>
+	
+		<dependency>
+		  <groupId>javax.mail</groupId>
+		  <artifactId>mail</artifactId>
+		  <version>1.4.7</version>
+		</dependency>
+		<dependency>  
+            <groupId>org.quartz-scheduler</groupId>  
+            <artifactId>quartz</artifactId>  
+            <version>1.8.5</version>  
+        </dependency>
+  </dependencies>
+  
+  <profiles>
+         <profile>
+             <!-- 本地环境 -->
+             <id>local</id>
+             <properties>
+				<env>dev</env>
+				<databaseUrl>
+				<![CDATA[jdbc:mysql://127.0.0.1:3306/usm?useUnicode=true&characterEncoding=utf-8&relaxAutoCommit=true&zeroDateTimeBehavior=convertToNull]]>
+				</databaseUrl>
+				<databaseUserName>root</databaseUserName>
+				<databasePassword>root</databasePassword>
+				<ebsdatabaseUrl>
+				<![CDATA[jdbc:mysql://10.0.73.117:3306/epay?useUnicode=true&characterEncoding=utf-8&relaxAutoCommit=true&zeroDateTimeBehavior=convertToNull]]>
+				</ebsdatabaseUrl>
+				<ebsdatabaseUserName>mer_user</ebsdatabaseUserName>
+				<ebsdatabasePassword>mer_user</ebsdatabasePassword>
+				<version>${version}</version>
+				<task>true</task>
+             </properties>
+              <!-- 默认激活本环境 -->
+             <activation>
+                 <activeByDefault>true</activeByDefault>
+             </activation>
+            
+         </profile>
+         <profile>
+             <!-- 开发环境 -->
+             <id>dev</id>
+             <properties>
+				<env>dev</env>
+
+				<version>${version}</version>
+
+             </properties>
+            
+         </profile>
+         <profile>
+             <!-- 测试环境 -->
+             <id>test</id>
+             <properties>
+				<version>${version}</version>
+				<env>test</env>
+             </properties>
+         </profile>
+         <profile>
+             <!-- 预发布环境 -->
+             <id>pre</id>
+             <properties>
+ 				<version>${version}</version>
+ 				<env>pre</env>
+             </properties>
+         </profile>
+         <profile>
+             <!-- 生产环境 -->
+             <id>prod</id>
+             <properties>
+ 				<version>${version}</version>
+ 				<env>prd</env>
+             </properties>
+         </profile>
+     </profiles>
+     
+     <build>
+         <resources>
+             <resource>
+                 <directory>src/main/resources</directory>
+                 <filtering>true</filtering>
+                <excludes>
+                	<exclude>assembly.xml</exclude>
+                	<exclude>product/*</exclude>
+                </excludes>
+             </resource>
+             <resource>
+                 <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                 <filtering>true</filtering>
+             </resource>
+         </resources>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <version>2.5.1</version>
+                 <configuration>
+                     <source>1.8</source>
+                     <target>1.8</target>
+                     <encoding>utf-8</encoding>
+                 </configuration>
+             </plugin>
+
+             <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<webResources>
+	                    <webResource>
+	                   		 <directory>src/main/resources/product</directory>
+	                        <targetPath>WEB-INF/classes</targetPath>
+	                        <filtering>true</filtering>
+	                    </webResource>
+	                </webResources>
+	              <!--   <packagingExcludes>WEB-INF/classes/conf/dataSource.conf</packagingExcludes> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>make-zip</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/resources/assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 执行测试用例插件 -->
+             <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			 <plugin>
+				 <groupId>org.mybatis.generator</groupId>
+				 <artifactId>mybatis-generator-maven-plugin</artifactId>
+				 <version>1.3.2</version>
+				 <configuration>
+					 <!-- mybatis用于生成代码的配置文件 -->
+					 <configurationFile>generatorConfig.xml</configurationFile>
+					 <verbose>true</verbose>
+					 <overwrite>true</overwrite>
+				 </configuration>
+				 <dependencies>
+					 <dependency>
+						 <groupId>tk.mybatis</groupId>
+						 <artifactId>mapper</artifactId>
+						 <version>4.0.0-beta3</version>
+					 </dependency>
+
+					 <dependency>
+						 <groupId>mysql</groupId>
+						 <artifactId>mysql-connector-java</artifactId>
+						 <!-- 引用依赖库的版本 -->
+						 <version>5.1.9</version>
+					 </dependency>
+				 </dependencies>
+			 </plugin>
+         </plugins>
+         <finalName>usm</finalName>
+     </build>
+
+</project>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwx.usm.mapper.SysUserDataAuthMapper" >
+  <resultMap id="BaseResultMap" type="com.lwx.usm.model.SysUserDataAuth" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="auth_type" property="authType" jdbcType="CHAR" />
+    <result column="auth_type_name" property="authTypeName" jdbcType="VARCHAR" />
+    <result column="auth_code" property="authCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, USER_ID, auth_type, auth_type_name, auth_code
+  </sql>
+</mapper>

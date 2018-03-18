@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <head id="Head1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>英大基础信息平台</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.2/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.2/themes/icon.css" />
+
+    <script src="js/jquery-easyui-1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery-easyui-1.4.2/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="js/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+	<script type="text/javascript" src='js/jquery-easyui-1.4.2/easyloader.js'> </script>
+	<script src="js/common/common.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+	var queryParams = "{\"dicCode\":\"PLANNING_STATUS\",\"selected\":\"ADJUSTED\"}";	
+	var loadFunction = function(paraData, objName )
+	{
+		var obj = $('#'+objName);
+		jQuery.ajax({  
+	    	type : 'POST',  
+	        contentType:"application/json",  
+	        url : contextPath+'/dicItem/getDicItem',  
+	        data : paraData, 
+	        dataType : 'json',
+	        success : function(data) {
+	        	var state = data.state;
+	        	if(state=='succ')
+	        	{
+	        		var dicList = data.dicList;
+	        		//$('#test-realtimebox').combobox('loadData', dicList);
+	        		obj.combobox('loadData', dicList);
+	        	}
+	        	else if(state=='fail')
+	        	{
+	        	}	         	
+	        },
+	        error : function(XMLResponse) {  
+	        	alert("服务器错误，请联系管理员");
+	       		alert(XMLResponse.responseText);
+	        }  
+		 });
+	};
+	
+	
+	var projectClass;
+	$(function(){
+		//页面加载，判断是登陆还是登出 公共部分
+		jQuery.ajax({  
+	    	type : 'POST',  
+	        contentType:"application/json",  
+	        url : contextPath+'/dicItem/queryDicItem',  
+	        data : "[\"PLANNING_STATUS\",\"PROJECT_CLASS\"]", 
+	        dataType : 'json',
+	        success : function(data) {
+	        	var state = data.state;
+	        	if(state=='succ')
+	        	{
+	        		var dicMap = data.dicMap;
+	        		projectClass = dicMap.PROJECT_CLASS;
+	        		$('#test-lazybox').combobox('loadData', projectClass);
+	        		$('#test-lazybox').combobox('setValue', 'OPERATION');
+	        	}
+	        	else if(state=='fail')
+	        	{
+	        	}	        	
+	        },  
+	        error : function(XMLResponse) {  
+	        	alert("服务器错误，请联系管理员");
+	       		alert(XMLResponse.responseText);
+	        }  
+	    });
+		
+	 })
+	</script>
+</head>
+
+ <BODY>
+  <h2>下拉框演示1234</h2>
+    <p>先渲染下拉框所有选项（可同时渲染多个），后加载默认值.（适用于页面有很多个相同或者不同的下拉框，避免频繁访问服务端，减轻服务端压力）</p>
+    <input class="easyui-combobox" id="test-lazybox" name="项目类别" data-options=" valueField:'dicItemCode',textField:'dicItemName' ">
+    
+    <p>同时渲染下拉框的所有选项和默认值.</p>    
+    <input class="easyui-combobox" id="test-realtimebox" name="项目类别" 
+     			data-options=" valueField:'dicItemCode',
+     									textField:'dicItemName' ,
+     									loader:loadFunction(queryParams,'test-realtimebox')
+     									">
+	
+	 <p>日历控件只选择月份.</p>
+	<input id="test-monthbox" type="text" /><a href="#" class="easyui-linkbutton" onclick="javascript:alert($('#test-monthbox').datebox('getValue'));">Submit</a>
+	<script>
+	    $(function () {
+	        $('#test-monthbox').datebox({
+	            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+	                span.trigger('click'); //触发click事件弹出月份层
+	                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+	                    tds = p.find('div.calendar-menu-month-inner td');
+	                    tds.click(function (e) {
+	                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+	                        var year = /\d{4}/.exec(span.html())[0]//得到年份
+	                        , month = parseInt($(this).attr('abbr'), 10) -1; //月份
+	                        $('#test-monthbox').datebox('hidePanel')//隐藏日期对象
+	                        .datebox('setValue', year + '-' + (month+1)); //设置日期的值
+	                    });
+	                }, 0)
+	            },
+	            parser: function (s) {//配置parser，返回选择的日期
+	                if (!s) return new Date();
+	                var arr = s.split('-');                
+	                	return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+	            },
+	           // formatter: function (d) { var month = d.getMonth()+1; return d.getFullYear() + '-' + month; }//配置formatter，只返回年月
+	            formatter: function (d) { var month = d.getMonth()+1; return d.getFullYear() + '-' + (month<10?'0'+month:month ); }//配置formatter，只返回年月
+	        });
+	        var p = $('#test-monthbox').datebox('panel'), //日期选择对象
+	            tds = false, //日期选择对象中月份
+	            span = p.find('span.calendar-text'); //显示月份层的触发控件
+	        var today = new Date();
+	        $('#test-monthbox').datebox('setValue',today.getFullYear()+"-"+(today.getMonth()+1));
+	        // var testDate = new Date('2015','11','1');
+	         //alert(testDate.toDateString());
+	         //alert(testDate.getMonth());
+	       // if(arr[1]>12)
+            //	return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 2, 1);
+            //else
+	    });
+	</script>
+ </BODY>
+</HTML>

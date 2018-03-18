@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lwx.usm.mapper.SysDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.lwx.usm.model.SysDictionary" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dic_type" property="dicType" jdbcType="VARCHAR" />
+    <result column="dic_type_name" property="dicTypeName" jdbcType="CHAR" />
+    <result column="dic_code" property="dicCode" jdbcType="VARCHAR" />
+    <result column="dic_value" property="dicValue" jdbcType="VARCHAR" />
+    <result column="dic_code_name" property="dicCodeName" jdbcType="VARCHAR" />
+    <result column="edit" property="edit" jdbcType="CHAR" />
+    <result column="sort_code" property="sortCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, dic_type, dic_type_name, dic_code, dic_value, dic_code_name, edit, sort_code, 
+    status, create_user, update_user, create_time, update_time
+  </sql>
+</mapper>
